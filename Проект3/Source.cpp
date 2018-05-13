@@ -21,6 +21,7 @@ bool startGame() {
 	Sprite block[1000];
 
 	int n = 0;
+	int count = 50;
 	for (int i = 1; i <= 10; i++)
 		for (int j = 1; j <= 10; j++)
 		{
@@ -29,8 +30,8 @@ bool startGame() {
 			n++;
 		} // блоки 10 на 10
 
-	float dx = 4, dy = 3;
-	float x = 300, y = 300; //скорость и начальное положение м€ча
+	float dx = 3, dy = 2;
+	float x = 330, y = 300; //скорость и начальное положение м€ча
 
 	while (app.isOpen())
 	{
@@ -46,6 +47,7 @@ bool startGame() {
 			if (FloatRect(x + 3, y + 3, 6, 6).intersects(block[i].getGlobalBounds()))
 			{
 				block[i].setPosition(-100, 0); dx = -dx;
+				count--;
 			} 
 
 		y += dy;
@@ -62,8 +64,39 @@ bool startGame() {
 
 
 
-		if (Keyboard::isKeyPressed(Keyboard::Tab) || (y > 450)) 
+		if (Keyboard::isKeyPressed(Keyboard::Tab))
 		{ return true; }//если таб или нижн€€ граница, то перезагружаем игру
+		if (y > 450)
+		{
+			dx = 0;
+			dy = 0;
+			if (Keyboard::isKeyPressed(Keyboard::Space) || (count ==0))
+				return true;
+			/*sf:: Font font;//шрифт 
+			font.loadFromFile("CyrilicOld.ttf");//передаем нашему шрифту файл шрифта
+			Text text("", font, 100);//создаем объект текст. закидываем в объект текст строку, шрифт, размер шрифта(в пиксел€х);//сам объект текст (не строка)
+			
+			text.setStyle(sf::Text::Bold | sf::Text::Underlined);//жирный и подчеркнутый текст. по умолчанию он "худой":)) и не подчеркнутый
+
+			text.setString("—обрано камней:");//задает строку тексту
+			sf::Text text;
+
+			// выбираем шрифт
+			text.setFont(font); // font это sf::Font
+
+								// выбираем отображаемую строку
+			text.setString("Hello world");
+
+			// выбираем размер символов
+			text.setCharacterSize(24); // в пиксел€х, а не точках!
+
+			
+
+			// выбираем стиль текста
+			text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+			
+		app.draw(text);*/
+		}
 		if (Keyboard::isKeyPressed(Keyboard::Escape)) 
 		{ return false; }//если эскейп, то выходим из игры
 
